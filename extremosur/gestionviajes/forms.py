@@ -17,7 +17,7 @@ class RegistroClienteForm(forms.ModelForm):
 class PaqueteForm(forms.ModelForm):
     class Meta:
         model = PaqueteTuristico
-        fields = ['nombre_destino', 'fecha_viaje', 'valor']
+        fields = ['nombre_destino', 'fecha_viaje', 'valor' ,'imagen']
 
 class ContactoForm(forms.ModelForm):
     class Meta:

@@ -13,7 +13,7 @@ class PaqueteTuristico(models.Model):
     nombre_destino = models.CharField(max_length=100)
     fecha_viaje = models.DateField()
     valor = models.IntegerField()  # Cambiado a IntegerField para no tener decimales
-    imagen = models.ImageField(upload_to='imagenes_paquetes/', null=True, blank=True)
+    imagen = models.ImageField(upload_to='imagenes_paquete/')
 
     def __str__(self):
         return f"{self.nombre_destino} - ${self.valor}"
