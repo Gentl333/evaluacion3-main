@@ -283,3 +283,5 @@ def clear_cart(request):
     if 'carrito' in request.session:
         del request.session['carrito']
     return JsonResponse({'success': True})
+
+
