@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalle del Contacto</title>
+    <style>
+ 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #ffffff; 
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease; 
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #45a049; 
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-danger:hover {
+            background-color: #da190b; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalle del Contacto</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <p><strong>Nombre:</strong> {{ contacto.nombre }}</p>
+                <p><strong>RUT:</strong> {{ contacto.rut }}</p>
+                <p><strong>Ciudad:</strong> {{ contacto.ciudad }}</p>
+                <p><strong>Correo Electrónico:</strong> {{ contacto.correo_electronico }}</p>
+                <p><strong>Consulta:</strong> {{ contacto.consulta }}</p>
+                <a href="{% url 'contacto_update' contacto.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'contacto_delete' contacto.id %}" class="btn btn-danger">Eliminar</a>
+                <a href="{% url 'contacto_list' %}" class="btn btn-primary">Volver a la lista</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

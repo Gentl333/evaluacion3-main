@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Contactos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+  
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #ffffff; 
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            color: #ffffff; 
+        }
+
+        th {
+            background-color: #333; 
+        }
+
+        tr:nth-child(even) {
+            background-color: #555; 
+        }
+
+        tr:hover {
+            background-color: #777; 
+        }
+
+        .btn {
+            background-color: #4CAF50; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease; 
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-danger:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Solicitud de Contacto</h1>
+    <a href="{% url 'contacto_create' %}" class="btn btn-success">Crear Nuevo Contacto</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>RUT</th>
+                <th>Ciudad</th>
+                <th>Correo Electrónico</th>
+                <th>Consulta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contacto in contactos %}
+            <tr>
+                <td>{{ contacto.id }}</td>
+                <td>{{ contacto.nombre }}</td>
+                <td>{{ contacto.rut }}</td>
+                <td>{{ contacto.ciudad }}</td>
+                <td>{{ contacto.correo_electronico }}</td>
+                <td>{{ contacto.consulta }}</td>
+                <td>
+                    <a href="{% url 'contacto_detail' contacto.id %}" class="btn btn-primary">Ver</a>
+                    <a href="{% url 'contacto_update' contacto.id %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'contacto_delete' contacto.id %}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock %}

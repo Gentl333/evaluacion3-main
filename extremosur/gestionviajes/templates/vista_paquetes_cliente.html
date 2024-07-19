@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Nuestros Paquetes</h1>
+
+        <!-- Barra de búsqueda -->
+
+
+        <div id="paquetes-list" class="row">
+            {% for paquete in page_obj %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        {% if paquete.imagen %}
+                            <img src="{{ paquete.imagen.url }}" class="card-img-top" alt="{{ paquete.nombre_destino }}">
+                        {% else %}
+                            <img src="{% static 'img/default.png' %}" class="card-img-top" alt="No Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ paquete.nombre_destino }}</h5>
+                            <p class="card-text">Fecha de Viaje: {{ paquete.fecha_viaje }}</p>
+                            <p class="card-text">Valor: {{ paquete.valor }}</p>
+                            <a href="{% url 'agregar_al_carrito' paquete.id %}" class="btn btn-primary">Agregar al Carrito</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <p>No se encontraron paquetes.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination mt-4">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if query %}&query={{ query }}{% endif %}" class="btn btn-outline-primary">&laquo; primero</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}" class="btn btn-outline-primary">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}" class="btn btn-outline-primary">Siguiente</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if query %}&query={{ query }}{% endif %}" class="btn btn-outline-primary">Último &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Función para actualizar los resultados de búsqueda
+            function updateSearchResults(query) {
+                $.ajax({
+                    url: '{% url "vista_paquetes_cliente" %}',
+                    type: 'GET',
+                    data: {
+                        'query': query,
+                    },
+                    success: function(response) {
+                        $('#paquetes-list').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error en la solicitud AJAX:', error);
+                    }
+                });
+            }
+
+
+            $('#search-input').on('input', function() {
+                var query = $(this).val().trim();
+                updateSearchResults(query);
+            });
+
+            // Manejar el envío del formulario de búsqueda
+            $('#search-form').submit(function(event) {
+                event.preventDefault(); 
+                var query = $('#search-input').val().trim();
+                updateSearchResults(query);
+            });
+        });
+    </script>
+{% endblock %}

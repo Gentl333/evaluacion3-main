@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Paquetes Turísticos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Listado de Paquetes Turísticos</h1>
+        <div class="row">
+            {% for paquete in paquetes %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        {% if paquete.imagen %}
+                            <img src="{{ paquete.imagen.url }}" class="card-img-top" alt="{{ paquete.nombre_destino }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ paquete.nombre_destino }}</h5>
+                            <p class="card-text">Fecha de Viaje: {{ paquete.fecha_viaje }}</p>
+                            <p class="card-text">Valor: {{ paquete.valor }}</p>
+                            <a href="{% url 'paquete_detail' paquete.id %}" class="btn btn-primary">Ver</a>
+                            <a href="{% url 'paquete_update' paquete.id %}" class="btn btn-secondary">Editar</a>
+                            <a href="{% url 'paquete_delete' paquete.id %}" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'paquete_create' %}" class="btn btn-success">Agregar Nuevo Paquete</a>
+    </div>
+</body>
+</html>
+{% endblock %}
